@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"os"
 	"time"
 	"github.com/eiannone/keyboard"
 )
@@ -37,16 +38,39 @@ func renderGame() {
 
 func enemyAI() {
 	if enemyX < playerX {
-
+		if enemyX > 0 {
+			enemyX--
+		} else {
+			enemyX++
+		}
 	} else {
-
+		if enemyX < MAPX {
+			enemyX++
+		} else {
+			enemyX--
+		}
 	}
 
 	if enemyY < playerY {
+                if enemyY > 0 {
+			enemyY--
+                } else {
+                        enemyY++
+                }
+        } else {
+                if enemyY < MAPY {
+                        enemyY++
+                } else {
+                        enemyY--
+                }
+        }
+}
 
-	} else
-	{
-
+func checkWin() {
+	if playerX == enemyX && playerY == enemyY {
+		renderGame()
+		fmt.Println("\n\n\nWINNER! YOU CAUGHT THE '@'!")
+		os.Exit(0)
 	}
 }
 
@@ -94,6 +118,7 @@ func gameLoop() {
 		}
 
 		enemyAI()
+		checkWin()
 		renderGame()
 
 		time.Sleep(500)
