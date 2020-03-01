@@ -1,21 +1,29 @@
 package main
 
+/*
+ Import format package for printing to console.
+ Import os console to exit the program.
+ Import eiannonne keyboard to capture keyboard input
+*/
 import (
 	"fmt"
 	"os"
-	"time"
 	"github.com/eiannone/keyboard"
 )
 
+// The size of the map in x and y dimensions.
 var MAPX int
 var MAPY int
 
+// The player's position where 0,0 is the top left corner.
 var playerX int
 var playerY int
 
+// The enemy's position where 0,0 is the top left corner.
 var enemyX int
 var enemyY int
 
+// Renders the play screen of the game with the background, player and enemy.
 func renderGame() {
 	fmt.Print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
 	fmt.Print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
@@ -36,6 +44,7 @@ func renderGame() {
         }
 }
 
+// Really simple enemy AI that moves away from the player.
 func enemyAI() {
 	if enemyX < playerX {
 		if enemyX > 0 {
@@ -66,6 +75,7 @@ func enemyAI() {
         }
 }
 
+// Checks if the player has caught the enemy.
 func checkWin() {
 	if playerX == enemyX && playerY == enemyY {
 		renderGame()
@@ -74,6 +84,7 @@ func checkWin() {
 	}
 }
 
+// The main loop of the game, this loop pauses until it sees keyboard input.
 func gameLoop() {
 	err := keyboard.Open()
 	if err != nil {
@@ -98,6 +109,7 @@ func gameLoop() {
 			break
 		}
 
+		// Switch handles the user's input for movement.
 		switch char {
 			case 'w':
 				if playerY > 0 {
@@ -118,13 +130,13 @@ func gameLoop() {
 		}
 
 		enemyAI()
-		checkWin()
 		renderGame()
-
-		time.Sleep(500)
+		checkWin()
 	}
 }
 
+
+// Main function and start of execution.
 func main() {
 
 	MAPX = 16
@@ -137,4 +149,3 @@ func main() {
 
 	gameLoop()
 }
-
