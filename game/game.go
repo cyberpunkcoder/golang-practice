@@ -8,6 +8,7 @@ package main
 import (
 	"fmt"
 	"os"
+
 	"github.com/eiannone/keyboard"
 )
 
@@ -31,17 +32,17 @@ func renderGame() {
 	fmt.Print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
 
 	for y := 0; y <= MAPY; y++ {
-                for x := 0; x <= MAPX; x++ {
-                        if x == playerX && y == playerY {
+		for x := 0; x <= MAPX; x++ {
+			if x == playerX && y == playerY {
 				fmt.Print("╬")
 			} else if x == enemyX && y == enemyY {
 				fmt.Print("@")
 			} else {
 				fmt.Print("░")
 			}
-                }
-                fmt.Println();
-        }
+		}
+		fmt.Println()
+	}
 }
 
 // Really simple enemy AI that moves away from the player.
@@ -61,18 +62,18 @@ func enemyAI() {
 	}
 
 	if enemyY < playerY {
-                if enemyY > 0 {
+		if enemyY > 0 {
 			enemyY--
-                } else {
-                        enemyY++
-                }
-        } else {
-                if enemyY < MAPY {
-                        enemyY++
-                } else {
-                        enemyY--
-                }
-        }
+		} else {
+			enemyY++
+		}
+	} else {
+		if enemyY < MAPY {
+			enemyY++
+		} else {
+			enemyY--
+		}
+	}
 }
 
 // Checks if the player has caught the enemy.
@@ -103,30 +104,30 @@ func gameLoop() {
 	for {
 		char, key, err := keyboard.GetKey()
 
-		if (err != nil) {
+		if err != nil {
 			panic(err)
-		} else if (key == keyboard.KeyEsc) {
+		} else if key == keyboard.KeyEsc {
 			break
 		}
 
 		// Switch handles the user's input for movement.
 		switch char {
-			case 'w':
-				if playerY > 0 {
-					playerY--
-				}
-			case 'a':
-				if playerX > 0 {
-					playerX--
-				}
-			case 's':
-				if playerY < MAPY {
-					playerY++
-				}
-			case 'd':
-				if playerX < MAPX {
-					playerX++
-				}
+		case 'w':
+			if playerY > 0 {
+				playerY--
+			}
+		case 'a':
+			if playerX > 0 {
+				playerX--
+			}
+		case 's':
+			if playerY < MAPY {
+				playerY++
+			}
+		case 'd':
+			if playerX < MAPX {
+				playerX++
+			}
 		}
 
 		enemyAI()
@@ -134,7 +135,6 @@ func gameLoop() {
 		checkWin()
 	}
 }
-
 
 // Main function and start of execution.
 func main() {
